@@ -205,8 +205,10 @@ public class Enemy : MonoBehaviour
         ScoreManager scoreManager = smGameObject.GetComponent<ScoreManager>();
         // 3. 컴포넌트의 Score 속성을 증가시킨다.
         int score = scoreManager.GetScore();
-        scoreManager.SetScore(score+1);
-        Debug.Log(scoreManager.GetScore()) ;
+        //scoreManager.SetScore(score+1);
+        //Debug.Log(scoreManager.GetScore()) ;
+        scoreManager.AddScore();
+
 
 
         

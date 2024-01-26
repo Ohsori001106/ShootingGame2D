@@ -57,6 +57,10 @@ public class ScoreManager : MonoBehaviour
         return _score;
     }
 
+    public void AddScore()
+    {
+        SetScore(_score + 1);
+    }
     public void SetScore(int score)
     {
         if (score < 0)
