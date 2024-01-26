@@ -204,33 +204,12 @@ public class Enemy : MonoBehaviour
         // 2. ScoreManager 게임 오브젝트에서 ScoreManager 스크립트 컴포넌트를 얻어온다.
         ScoreManager scoreManager = smGameObject.GetComponent<ScoreManager>();
         // 3. 컴포넌트의 Score 속성을 증가시킨다.
-        scoreManager.Score += 1;
-        Debug.Log(scoreManager.Score);
+        int score = scoreManager.GetScore();
+        scoreManager.SetScore(score+1);
+        Debug.Log(scoreManager.GetScore()) ;
 
 
-        // 목표: 스코어를 화면에 표시한다.
-        scoreManager.ScoreTextUI.text = $"점수: {scoreManager.Score}";
-
-
-        // 목표: 최고 점수를 갱신하고 UI에 표시하고 싶다.
-        // 1. 만약에 현재 점수가 최고 점수보다 크다면
-        if(scoreManager.Score > scoreManager.BestScore)
-        {
-            // 2. 최고 점수를 갱신하고,
-            scoreManager.BestScore = scoreManager.Score;
-
-
-            // 목표: 최고 점수를 저장
-            // 'PlayerPrefs' 클래스를 사용
-            // -> 데이터를 '키(Key)'와 '값(Value)' 형태로 저장하는 클래스
-            // 저장할 수 있는 데이터타입: int, float, string
-            // 타입별로 저장/로드가 가능한 Set/Get 메서드가 있다.
-            PlayerPrefs.SetInt("BestScore", scoreManager.BestScore);
-
-
-            // 3. UI에 표시한다.
-            scoreManager.BestScoreTextUI.text = $"최고 점수: {scoreManager.Score}";
-        }
+        
     }
 
     public void MakeItem()
