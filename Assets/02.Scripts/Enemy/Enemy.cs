@@ -64,9 +64,9 @@ public class Enemy : MonoBehaviour
             // 1. 각도를 구한다.
             // tan@ = y/x    -> @ = y/x*atan
             float radian = Mathf.Atan2(_dir.y, _dir.x);
-            Debug.Log(radian); // 호도법 -> 라디안 값
+            //Debug.Log(radian); // 호도법 -> 라디안 값
             float degree = radian * Mathf.Rad2Deg;
-            Debug.Log(degree);
+            //Debug.Log(degree);
 
             // 2. 각도에 맞게 회전한다.
             // transform.rotation = Quaternion.Euler(new Vector3(0, 0, degree + 90)); // 이미지 리소스에 맞게 90도를 뺀다.
@@ -92,9 +92,9 @@ public class Enemy : MonoBehaviour
             // 1. 각도를 구한다.
             // tan@ = y/x    -> @ = y/x*atan
             float radian = Mathf.Atan2(_dir.y, _dir.x);
-            Debug.Log(radian); // 호도법 -> 라디안 값
+            //ebug.Log(radian); // 호도법 -> 라디안 값
             float degree = radian * Mathf.Rad2Deg;
-            Debug.Log(degree);
+            //Debug.Log(degree);
 
             // 2. 각도에 맞게 회전한다.
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, degree + 90)); // 이미지 리소스에 맞게 90도를 뺀다.
@@ -121,19 +121,13 @@ public class Enemy : MonoBehaviour
         // 충돌한 게임 오브젝트의 태그를 확인
         // Debug.Log(collision.collider.tag); // Player or Bullet
 
+
         if (collision.collider.tag == "Player")
-        {
-            // 플레이어 스크립트를 가져온다.
+        {   // 플레이어 스크립트를 가져온다.
             Player player = collision.collider.GetComponent<Player>();
             // 플레이어 체력을 -= 1
-            player.Health -= 1;
-
-            // 플레이어 체력이 적다면..
-            if(player.Health <= 0)
-            {
-                Destroy(collision.collider.gameObject);
-            }
-
+            player.MinusPlayerHealth(1);
+            
             Death();
         }
         else if(collision.collider.tag == "Bullet")
@@ -200,14 +194,17 @@ public class Enemy : MonoBehaviour
 
         // 목표: 스코어를 증가시키고 싶다.
         // 1. 씬에서 ScoreManager 게임 오브젝트를 찾아온다.
-        GameObject smGameObject = GameObject.Find("ScoreManager");
+        //GameObject smGameObject = GameObject.Find("ScoreManager");
         // 2. ScoreManager 게임 오브젝트에서 ScoreManager 스크립트 컴포넌트를 얻어온다.
-        ScoreManager scoreManager = smGameObject.GetComponent<ScoreManager>();
+        //ScoreManager scoreManager = smGameObject.GetComponent<ScoreManager>();
         // 3. 컴포넌트의 Score 속성을 증가시킨다.
-        int score = scoreManager.GetScore();
+        //int score = scoreManager.GetScore();
         //scoreManager.SetScore(score+1);
         //Debug.Log(scoreManager.GetScore()) ;
-        scoreManager.AddScore();
+
+        //scoreManager.AddScore();
+
+        ScoreManager.instance.AddScore();
 
 
 

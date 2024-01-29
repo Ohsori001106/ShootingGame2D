@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public int Health = 10;
+    private int _health = 10;
 
     private void Start()
     {
@@ -21,4 +22,39 @@ public class Player : MonoBehaviour
         playerMove.Speed = 5f;
         Debug.Log(playerMove.Speed);*/
     }
+
+    public int GetPlayerHealth()
+    {
+        return _health;
+    }
+
+    public void MinusPlayerHealth(int health)
+    {
+        _health -= health;
+        Debug.Log($"HP: {_health}");
+        // 플레이어 체력이 적다면..
+        if (_health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    public void SetPlayerHealth(int health)
+    {
+        _health = health;
+
+    }
+    public void AddHealthPlus(int health)
+    {
+        _health += health;
+        Debug.Log($"HP: {_health}");
+    }
+
+
+
+
+
+
+
 }
+

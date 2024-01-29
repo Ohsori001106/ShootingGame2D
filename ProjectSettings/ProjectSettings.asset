@@ -796,7 +796,7 @@ PlayerSettings:
   cloudProjectId: 790b8cdf-ecfd-4df3-8ac7-42e7ae397982
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 2DShootingGame
+  projectName: ShootingGame2D
   organizationId: winer7495
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

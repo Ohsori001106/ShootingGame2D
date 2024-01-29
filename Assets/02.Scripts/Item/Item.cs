@@ -68,13 +68,14 @@ public class Item : MonoBehaviour
             if(MyType == 0) 
             {
                 Player player = otherCollider.GetComponent<Player>();
-                player.Health += 1;
+                player.AddHealthPlus(1);
             }
             else if(MyType == 1) 
             {
                 // 타입이 1이면 플레이어의 스피드올려주기
                 PlayerMove playerMove = otherCollider.GetComponent<PlayerMove>();
-                playerMove.Speed += 0.0001f;
+               // playerMove.SetSpeed(playerMove.GetSpeed() + 0.01f);
+                playerMove.AddSpeed(0.01f);
             }
 
             GameObject vfx = Instantiate(EatVFXPrefab);
