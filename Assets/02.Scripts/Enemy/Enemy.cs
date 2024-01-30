@@ -122,7 +122,7 @@ public class Enemy : MonoBehaviour
         // Debug.Log(collision.collider.tag); // Player or Bullet
 
 
-        if (collision.collider.tag == "Player")
+        if (collision.collider.CompareTag("Player"))
         {   // 플레이어 스크립트를 가져온다.
             Player player = collision.collider.GetComponent<Player>();
             // 플레이어 체력을 -= 1
@@ -130,7 +130,7 @@ public class Enemy : MonoBehaviour
             
             Death();
         }
-        else if(collision.collider.tag == "Bullet")
+        else if(collision.collider.CompareTag ("Bullet"))
         {
             Bullet bullet = collision.collider.GetComponent<Bullet>();
             /*if(bullet.BType == BulletType.Main)
@@ -168,7 +168,8 @@ public class Enemy : MonoBehaviour
 
 
             // 총알 삭제
-            Destroy(collision.collider.gameObject);
+            //Destroy(collision.collider.gameObject);
+            collision.collider.gameObject.SetActive(false);
         }
     }
 
