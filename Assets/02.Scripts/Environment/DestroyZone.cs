@@ -15,15 +15,11 @@ public class DestroyZone : MonoBehaviour
     {
         
 
-        if(otherCollider.tag == "Bullet")
+        if(otherCollider.tag == "Bullet"|| otherCollider.tag == "Enemy")
         {
             otherCollider.gameObject.SetActive(false);
         }
-        else
-        {
-            // 2. 충돌한 물체를 파괴해버린다.
-            Destroy(otherCollider.gameObject);
-        }
+        
     }
 
    
