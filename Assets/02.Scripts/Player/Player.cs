@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
         // 플레이어 체력이 적다면..
         if (_health <= 0)
         {
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
     }
 
