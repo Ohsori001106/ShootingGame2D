@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerFire : MonoBehaviour
@@ -88,6 +89,7 @@ public class PlayerFire : MonoBehaviour
     {
         Debug.Log(Application.dataPath);
         Timer = 0f;
+        BoomTimer = 0f;
         AutoMode = false;
 
 
@@ -97,15 +99,32 @@ public class PlayerFire : MonoBehaviour
     {
         // 타이머 계산
         Timer -= Time.deltaTime;
-
-        CheckAutoMode();
-
-        Fire();
-
         BoomTimer -= Time.deltaTime;
+        CheckAutoMode();
+        bool ready = AutoMode || Input.GetKeyDown(KeyCode.Space);
+        if (Timer <= 0 && ready)
+        {
+            Fire();
+        }
+        
+        
 
+        
+        
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Boom();
+        }
+        
+        
+    }
+
+    private void Boom()
+    {
+          
         // 붐 타이머가 0보다 같거나 작고 && 3번 버튼을 누르면
-        if (BoomTimer <= 0f && Input.GetKeyDown(KeyCode.Alpha3))
+        if (BoomTimer <= 0f  )
         {
             // 붐 타이머 시간을 다시 쿨타임으로..
             BoomTimer = BOOM_COOL_TIME;
@@ -117,7 +136,6 @@ public class PlayerFire : MonoBehaviour
             boomObject.transform.position = new Vector2(0, 1.6f);
         }
     }
-
     private void CheckAutoMode()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -131,13 +149,23 @@ public class PlayerFire : MonoBehaviour
             AutoMode = false;
         }
     }
+    private void OnClickAutoMode()
+    {
+        if (AutoMode == false)
+        {
+            Debug.Log("자동 공격 모드");
+            AutoMode = true;
+        }
+        else if (AutoMode==true)
+        {
+            Debug.Log("수동 공격 모드");
+            AutoMode = false;
+        }
+    }
 
     private void Fire()
     {
         // 1. 타이머가 0보다 작은 상태에서 발사 버튼을 누르거나 자동 공격 모드면
-        bool ready = AutoMode || Input.GetKeyDown(KeyCode.Space);
-        if (Timer <= 0 && ready)
-        {
             FireSource.Play();
 
             // 타이머 초기화
@@ -192,9 +220,32 @@ public class PlayerFire : MonoBehaviour
                 // 3. 총알을 킨다(발사)
                 bullet.gameObject.SetActive(true);
             }
-        }
+        
     }
 
+    // 총알 발사
+    public void OnClickXButton()
+    {
+        Debug.Log("X버튼이 클릭되었습니다");
+        if (Timer <= 0 )
+        {
+            Fire();
+        }
+        
+
+    }
+    // 자동 공격 on/off
+    public void OnClickYButton()
+    {
+        Debug.Log("Y버튼이 클릭되었습니다");
+        OnClickAutoMode();
+    }
+    // 궁극기 사용
+    public void OnClickBButton()
+    {
+        Debug.Log("B버튼이 클릭되었습니다");
+        Boom();
+    }
 }
 
 
