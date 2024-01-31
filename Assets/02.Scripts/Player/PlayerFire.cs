@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerFire : MonoBehaviour
 {
@@ -87,6 +88,18 @@ public class PlayerFire : MonoBehaviour
 
     private void Start()
     {
+        // 전처리 단계: 코드가 컴파일(해석) 되기 전에 미리 처리되는 단계
+        // 전처리문 코드를 이용해서 미리 처리되는 코드를 작성할 수 있다.
+        // C#에 모든 전처리 코드는 '#'으로 시작한다. ( #if, #elif, #endif)
+
+#if UNITY_EDITOR || UNITY_STANDALONE
+        GameObject.Find("Joystick canvas XYBZ").SetActive(false);
+#endif
+
+#if UNITY_ANDROID
+Debug.Log("안드로이드 입니다")
+#endif
+
         Debug.Log(Application.dataPath);
         Timer = 0f;
         BoomTimer = 0f;
@@ -100,9 +113,10 @@ public class PlayerFire : MonoBehaviour
         // 타이머 계산
         Timer -= Time.deltaTime;
         BoomTimer -= Time.deltaTime;
+        
         CheckAutoMode();
         bool ready = AutoMode || Input.GetKeyDown(KeyCode.Space);
-        if (Timer <= 0 && ready)
+        if (ready)
         {
             Fire();
         }
@@ -149,9 +163,9 @@ public class PlayerFire : MonoBehaviour
             AutoMode = false;
         }
     }
-    private void OnClickAutoMode()
+   /* private void OnClickAutoMode()
     {
-        if (AutoMode == false)
+        if (AutoMode == false )
         {
             Debug.Log("자동 공격 모드");
             AutoMode = true;
@@ -161,11 +175,15 @@ public class PlayerFire : MonoBehaviour
             Debug.Log("수동 공격 모드");
             AutoMode = false;
         }
-    }
+    }*/
 
     private void Fire()
     {
-        // 1. 타이머가 0보다 작은 상태에서 발사 버튼을 누르거나 자동 공격 모드면
+        if (Timer <= 0f)
+        {
+
+
+            // 1. 타이머가 0보다 작은 상태에서 발사 버튼을 누르거나 자동 공격 모드면
             FireSource.Play();
 
             // 타이머 초기화
@@ -191,7 +209,7 @@ public class PlayerFire : MonoBehaviour
                 foreach (Bullet b in _bulletPool)
                 {
                     //만약에 꺼져있다면
-                    if (b.gameObject.activeInHierarchy == false && b.BType==BulletType.Main)
+                    if (b.gameObject.activeInHierarchy == false && b.BType == BulletType.Main)
                     {
                         bullet = b;
                         break;  //찾았기 때문에 그 뒤까지 찾을 필요가 없다
@@ -220,17 +238,17 @@ public class PlayerFire : MonoBehaviour
                 // 3. 총알을 킨다(발사)
                 bullet.gameObject.SetActive(true);
             }
-        
+        }
     }
 
     // 총알 발사
     public void OnClickXButton()
     {
         Debug.Log("X버튼이 클릭되었습니다");
-        if (Timer <= 0 )
-        {
+        
+        
             Fire();
-        }
+        
         
 
     }
@@ -238,7 +256,8 @@ public class PlayerFire : MonoBehaviour
     public void OnClickYButton()
     {
         Debug.Log("Y버튼이 클릭되었습니다");
-        OnClickAutoMode();
+        // CheckAutoMode();
+        AutoMode = !AutoMode;
     }
     // 궁극기 사용
     public void OnClickBButton()
